@@ -1,5 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define in(n)           long long int n;   cin >> n
+#define inarr(n, arr)   vll arr(n); f(i, 0, n)    cin >> arr[i]
+#define instr(s)        string s;   cin >> s
 #define ll long long int
 #define vll vector<ll>
 #define vpll vector<pair<ll, ll>>
@@ -32,6 +35,9 @@ using namespace std;
 #define dbg4(x,y,z,w) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << "\t" << #w << "= " << w << endl;
 
 void solve() {
+    in(n);
+    inarr(n,arr);
+    
 }
 
 int main() {
@@ -41,7 +47,7 @@ int main() {
     ll i = 0;
     cin >> t;
     while (t--) {
-        //  cout << "Test Case : " << i + 1 << endl;
+         //cout << "Test Case : " << i + 1 << endl;
         solve();
         i++;
     }
