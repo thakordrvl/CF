@@ -28,28 +28,72 @@ using namespace std;
 #define dbans(ans) cout << #ans << " = " << ans << endl;
 #define pans(ans) cout << ans << endl;
 // ll fastprime(ll n){f(i, 2, (ll)sqrt(n)) if (n % i == 0) return 0;return 1;}
+#define printvector(x) for(int i=0 ; i<x.size() ; i++) cout<<x[i]<<" "; cout<<endl;
 #define fast ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
 #define dbg1(x) cout << #x << "= " << x << endl;
 #define dbg2(x,y) cout << #x << "= " << x << "\t" << #y << "= " << y <<endl;
 #define dbg3(x,y,z) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << endl;
 #define dbg4(x,y,z,w) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << "\t" << #w << "= " << w << endl;
 
-void solve() {
+bool isgood(string temp)
+{
+    ll k=temp.size();
+    for(ll i=0 ; i<k ; ++i)
+    {
+        if(temp[i]==temp[k-i-1]) return false;
+    }
+    return true;
+}
 
+void solve() {
+    in(n);
     instr(s);
-    // ll n = s.size();1
-    ll n=s.size();
-	vector<bool> hasOccured(26, false);
-	ll cnt=0;
-	for(ll i=0;i<n;++i){
-		if(hasOccured[s[i]-'a']){
-			cnt+=2;
-			hasOccured.assign(26,false);
-		}else{
-			hasOccured[s[i]-'a'] = true;
-		}
-	}
-	cout<<n-cnt<<endl;
+
+    if(n==1){
+        if(s[0]=='0'){
+            cout << 1 << endl;
+            cout << 1 << endl;
+        }
+
+        else{
+        cout << 1 << endl;
+        cout << 0 << endl;
+        }
+        return;
+    }
+
+    ll cnt=0;
+    vll v;
+    while(!isgood(s) && cnt<=300)
+    {   
+        if(isgood(s)) break;
+        ll m=s.size();
+        string st;
+        for(ll i=0 ; i<m ; ++i)
+        {
+            if(s[i]==s[m-i-1])
+            {   
+                v.pb(m-i);
+                string p=s.substr(0,m-i);
+                string q=s.substr(m-i,i);
+                st=p+"01"+q;
+                break;
+            }
+        }
+        s=st;
+        cnt++;
+    }
+    if(cnt>300 && !isgood(s))
+    {
+        cout<<-1<<endl;
+        return;
+    }
+    else
+    {
+        cout<<cnt<<endl;
+        printvector(v);
+        return;
+    }
 }
 
 int main() {

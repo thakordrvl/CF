@@ -35,21 +35,76 @@ using namespace std;
 #define dbg4(x,y,z,w) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << "\t" << #w << "= " << w << endl;
 
 void solve() {
+    in(n);
+    
+    ll sum = n*(n+1);
+    sum = sum/2;
 
-    instr(s);
-    // ll n = s.size();1
-    ll n=s.size();
-	vector<bool> hasOccured(26, false);
-	ll cnt=0;
-	for(ll i=0;i<n;++i){
-		if(hasOccured[s[i]-'a']){
-			cnt+=2;
-			hasOccured.assign(26,false);
-		}else{
-			hasOccured[s[i]-'a'] = true;
-		}
-	}
-	cout<<n-cnt<<endl;
+    if(sum&1){
+        pno
+        return;
+    }
+
+    pyes
+    vll first;
+    vll second;
+
+    if(n%4==0){
+
+        for(int i=1;i<=n/2;i+=2){
+            first.push_back(i);
+            first.push_back(n-i+1);
+        }
+
+        for(int i=2;i<=n/2;i+=2){
+            second.push_back(i);
+            second.push_back(n-i+1);
+        }
+
+        cout << n/2 << endl;
+
+        for(auto it : first){
+            cout << it << " ";
+        }
+
+        cout << endl;
+
+        cout << n/2 << endl;
+
+        for(auto it : second){
+            cout << it << " ";
+        }
+        cout << endl;
+
+        return;
+    }
+
+    cout << n/2 + 1 << endl;
+
+    for(int i=1;i<=(n-1)/2;i+=2){
+            first.push_back(i);
+            first.push_back(n-1-i+1);
+    }
+
+    for(auto it : first){
+            cout << it << " ";
+    }
+
+    cout << endl;
+
+    cout << n/2 << endl;
+
+    for(int i=2;i<=(n-1)/2;i+=2){
+            second.push_back(i);
+            second.push_back(n-1-i+1);
+    }
+
+    second.push_back(n);
+    
+    for(auto it : second){
+            cout << it << " ";
+    }
+    cout << endl;
 }
 
 int main() {
@@ -57,7 +112,7 @@ int main() {
     fast;
     ll t = 1;
     ll i = 0;
-    cin >> t;
+    // cin >> t;
     while (t--) {
          //cout << "Test Case : " << i + 1 << endl;
         solve();

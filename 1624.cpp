@@ -34,22 +34,79 @@ using namespace std;
 #define dbg3(x,y,z) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << endl;
 #define dbg4(x,y,z,w) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << "\t" << #w << "= " << w << endl;
 
+map<pair<int,int>,bool> m;
+
+bool check(int i, int col, vector<vector<char>> &board){
+
+    int tempi = i;
+    int tempcol = col;
+
+    while(tempi>=0 && tempcol>=0){
+
+        if(m[{tempi,tempcol}])
+            return false;
+
+        tempi--;
+        tempcol--;
+    }
+
+    tempi = i;
+    tempcol = col;
+
+    while(tempcol>=0){
+
+        if(m[{tempi,tempcol}])
+            return false;
+
+        tempcol--;
+    }
+
+    tempi = i;
+    tempcol = col;
+
+    while(tempi<8 && tempcol>=0){
+
+        if(m[{tempi,tempcol}])
+            return false;
+
+        tempi++;
+        tempcol--;
+    }
+
+    return true;
+}
+
+void solve2(int col, vector<vector<char>> &board, ll &ans){
+
+    if(col==8){
+        ans++;
+        return;
+    }
+
+    f(i,0,8){
+        if(board[i][col]=='.' && check(i,col,board)){
+            // m.insert({{i,col},true});
+            m[{i,col}] = true;
+            solve2(col+1,board,ans);
+            m[{i,col}] = false;
+        }
+    }
+}
+
+
 void solve() {
 
-    instr(s);
-    // ll n = s.size();1
-    ll n=s.size();
-	vector<bool> hasOccured(26, false);
-	ll cnt=0;
-	for(ll i=0;i<n;++i){
-		if(hasOccured[s[i]-'a']){
-			cnt+=2;
-			hasOccured.assign(26,false);
-		}else{
-			hasOccured[s[i]-'a'] = true;
-		}
-	}
-	cout<<n-cnt<<endl;
+    vector<vector<char>> board(8,vector<char>(8));
+
+    f(i,0,8){
+        f(j,0,8){
+            cin >> board[i][j];
+        }
+    }
+
+    ll ans = 0;
+    solve2(0,board,ans);
+    pans(ans);
 }
 
 int main() {
@@ -57,7 +114,7 @@ int main() {
     fast;
     ll t = 1;
     ll i = 0;
-    cin >> t;
+    // cin >> t;
     while (t--) {
          //cout << "Test Case : " << i + 1 << endl;
         solve();

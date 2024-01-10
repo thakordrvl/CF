@@ -36,20 +36,53 @@ using namespace std;
 
 void solve() {
 
-    instr(s);
-    // ll n = s.size();1
-    ll n=s.size();
-	vector<bool> hasOccured(26, false);
-	ll cnt=0;
-	for(ll i=0;i<n;++i){
-		if(hasOccured[s[i]-'a']){
-			cnt+=2;
-			hasOccured.assign(26,false);
-		}else{
-			hasOccured[s[i]-'a'] = true;
-		}
-	}
-	cout<<n-cnt<<endl;
+    in(n);
+    in(k);
+
+    if(k>n){
+        pno
+        return;
+    }
+
+    if(n%k==0){
+        pyes
+        f(i,0,k){
+            cout << n/k << " ";
+        }
+        cout << endl;
+        return;
+    }
+
+
+    if((n%k)%2==0){
+        pyes
+
+        f(i,0,k-1){
+            cout << n/k << " ";
+        }
+
+        cout << n/k + (n%k) << endl;
+        return;
+    }
+    
+    if((k-1+(n%k))&1){
+
+        if(n/k==1){
+            pno
+            return;
+        }
+
+        pyes
+
+        f(i,0,k-1){
+            cout << (n/k)-1 << " ";
+        }
+
+        cout << n/k + (n%k) + k-1 << endl;
+        return;
+    }
+
+    pno
 }
 
 int main() {
@@ -59,7 +92,7 @@ int main() {
     ll i = 0;
     cin >> t;
     while (t--) {
-         //cout << "Test Case : " << i + 1 << endl;
+        // cout << "Test Case : " << i + 1 << endl;
         solve();
         i++;
     }

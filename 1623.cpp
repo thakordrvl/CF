@@ -34,22 +34,34 @@ using namespace std;
 #define dbg3(x,y,z) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << endl;
 #define dbg4(x,y,z,w) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << "\t" << #w << "= " << w << endl;
 
-void solve() {
+ll ans = INT_MAX;
 
-    instr(s);
-    // ll n = s.size();1
-    ll n=s.size();
-	vector<bool> hasOccured(26, false);
-	ll cnt=0;
-	for(ll i=0;i<n;++i){
-		if(hasOccured[s[i]-'a']){
-			cnt+=2;
-			hasOccured.assign(26,false);
-		}else{
-			hasOccured[s[i]-'a'] = true;
-		}
-	}
-	cout<<n-cnt<<endl;
+void solve2(ll ind, ll sum, vll &arr, ll tot){
+
+    if(sum==tot){
+        ans = 0ll;
+        return;
+    }
+
+    if(ind==arr.size()){
+        return;
+    }
+
+    ans = min(ans,abs(tot-sum));
+
+    solve2(ind+1,sum+arr[ind],arr,tot-arr[ind]);
+    solve2(ind+1,sum,arr,tot);
+}
+
+void solve() {
+    in(n);
+    inarr(n,arr);
+    ll tot = 0;
+    f(i,0,n){
+        tot += arr[i];
+    }
+    solve2(0,0,arr,tot);
+    pans(ans);
 }
 
 int main() {
@@ -57,7 +69,7 @@ int main() {
     fast;
     ll t = 1;
     ll i = 0;
-    cin >> t;
+    // cin >> t;
     while (t--) {
          //cout << "Test Case : " << i + 1 << endl;
         solve();

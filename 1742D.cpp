@@ -36,20 +36,37 @@ using namespace std;
 
 void solve() {
 
-    instr(s);
-    // ll n = s.size();1
-    ll n=s.size();
-	vector<bool> hasOccured(26, false);
-	ll cnt=0;
-	for(ll i=0;i<n;++i){
-		if(hasOccured[s[i]-'a']){
-			cnt+=2;
-			hasOccured.assign(26,false);
-		}else{
-			hasOccured[s[i]-'a'] = true;
-		}
-	}
-	cout<<n-cnt<<endl;
+    vector<int> pairs[1001];
+    vector<int> indexing[1001];
+
+    f(i,1,1001){
+        f(j,1,1001){
+            if(__gcd(i,j)==1){
+                pairs[i].push_back(j);
+                pairs[j].push_back(i);
+            }
+        }
+    }
+
+    in(n);
+    inarr(n,arr);
+
+    f(i,0,n){
+        indexing[arr[i]].push_back(i+1);
+    }
+    
+    int ans = -1;
+
+    f(i,1,1001){
+
+        for(auto it : pairs[i]){
+            if(indexing[it].empty()==false && indexing[i].empty()==false){
+                ans = max(ans,indexing[it].back() + indexing[i].back());
+            }   
+        }
+    }
+
+    pans(ans);
 }
 
 int main() {

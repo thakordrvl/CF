@@ -34,22 +34,40 @@ using namespace std;
 #define dbg3(x,y,z) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << endl;
 #define dbg4(x,y,z,w) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << "\t" << #w << "= " << w << endl;
 
-void solve() {
 
-    instr(s);
-    // ll n = s.size();1
-    ll n=s.size();
-	vector<bool> hasOccured(26, false);
-	ll cnt=0;
-	for(ll i=0;i<n;++i){
-		if(hasOccured[s[i]-'a']){
-			cnt+=2;
-			hasOccured.assign(26,false);
-		}else{
-			hasOccured[s[i]-'a'] = true;
-		}
-	}
-	cout<<n-cnt<<endl;
+vector<string> solve2(int n){
+
+    if(n==1){
+        return {"0","1"};
+    }
+
+    if(n==2){
+        return {"00","01","11","10"};
+    }
+
+    vector<string> ans;
+    vector<string> son = solve2(n-1);
+
+    for(auto it : son){
+        ans.push_back("0" + it);
+    }
+
+    reverse(son.begin(),son.end());
+
+    for(auto it : son){
+        ans.push_back("1" + it);
+    }
+
+    return ans;
+}
+
+void solve() {
+    in(n);
+    vector<string> ans = solve2(n);
+
+    for(auto it : ans){
+        cout << it << endl;
+    }
 }
 
 int main() {
@@ -57,7 +75,7 @@ int main() {
     fast;
     ll t = 1;
     ll i = 0;
-    cin >> t;
+    // cin >> t;
     while (t--) {
          //cout << "Test Case : " << i + 1 << endl;
         solve();

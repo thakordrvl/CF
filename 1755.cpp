@@ -37,19 +37,75 @@ using namespace std;
 void solve() {
 
     instr(s);
-    // ll n = s.size();1
-    ll n=s.size();
-	vector<bool> hasOccured(26, false);
-	ll cnt=0;
-	for(ll i=0;i<n;++i){
-		if(hasOccured[s[i]-'a']){
-			cnt+=2;
-			hasOccured.assign(26,false);
-		}else{
-			hasOccured[s[i]-'a'] = true;
-		}
-	}
-	cout<<n-cnt<<endl;
+    int c = 0;
+    vll arr(26,0);
+    int n = s.size();
+    char ch = 'A';
+    string ans = "";
+
+    // cout << "hello" << endl;
+    f(i,0,n){
+        arr[s[i]-'A']++;
+    }
+
+    // for(auto it : arr){
+    //     if(it!=0){
+    //         cout << it << endl;
+    //     }
+
+    // }
+
+    f(i,0,26){
+        if(arr[i]&1){
+            c++;
+            ch = 'A' + i;
+        }
+    }
+
+    if(c>1){
+        cout << "NO SOLUTION" << endl;
+        return;
+    }
+
+    if(c){
+        arr[ch-'A']--;
+    }
+
+    // dbg1(ch);
+
+    f(i,0,26){
+
+        int temp = arr[i]/2;
+        // dbg1(temp);
+        while(temp){
+            ans.push_back('A'+i);
+            temp--;
+        }
+
+        arr[i] = arr[i]/2;
+    }
+
+    // dbg1(ans);
+
+    if(c){
+        ans.push_back(ch);
+    }
+
+    // dbg1(ans);
+
+
+    for(int i=25;i>=0;i--){
+
+        int temp = arr[i];
+        while(temp){
+            ans.push_back('A'+i);
+            temp--;
+        }
+        // arr[i] = arr[i]/2;
+    }
+
+
+    cout << ans << endl;
 }
 
 int main() {
@@ -57,7 +113,7 @@ int main() {
     fast;
     ll t = 1;
     ll i = 0;
-    cin >> t;
+    // cin >> t;
     while (t--) {
          //cout << "Test Case : " << i + 1 << endl;
         solve();

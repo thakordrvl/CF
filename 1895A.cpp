@@ -35,21 +35,21 @@ using namespace std;
 #define dbg4(x,y,z,w) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << "\t" << #w << "= " << w << endl;
 
 void solve() {
+    in(x);
+    in(y);
+    in(k);
 
-    instr(s);
-    // ll n = s.size();1
-    ll n=s.size();
-	vector<bool> hasOccured(26, false);
-	ll cnt=0;
-	for(ll i=0;i<n;++i){
-		if(hasOccured[s[i]-'a']){
-			cnt+=2;
-			hasOccured.assign(26,false);
-		}else{
-			hasOccured[s[i]-'a'] = true;
-		}
-	}
-	cout<<n-cnt<<endl;
+    if(y<=x){
+        cout << x << endl;
+        return;
+    }
+
+    if(x+k>=y){
+        cout << y << endl;
+        return;
+    }
+
+    cout << y + abs(x+k - y) << endl;
 }
 
 int main() {
@@ -59,7 +59,7 @@ int main() {
     ll i = 0;
     cin >> t;
     while (t--) {
-         //cout << "Test Case : " << i + 1 << endl;
+        //  cout << "Test Case : " << i + 1 << endl;
         solve();
         i++;
     }
