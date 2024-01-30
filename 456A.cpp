@@ -34,45 +34,38 @@ using namespace std;
 #define dbg3(x,y,z) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << endl;
 #define dbg4(x,y,z,w) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << "\t" << #w << "= " << w << endl;
 
+
+bool comp(pair<ll,ll> &p1, pair<ll,ll> &p2){
+    return p1.first >= p2.first;
+}
+
 void solve() {
     in(n);
-    in(x);
-    inarr(n,wt);
-    sort(all(wt));
-    int ans = 0;
+    vector<pair<ll,ll>> p;
+    vll price;
+    ll x,y;
     
     f(i,0,n){
-
-        int l = i+1;
-        int h = n-1;
-
-        if(wt[i]>x)
-            continue;
-
-        int temp = x - wt[i];
-        int i2 = -1;
-
-        while(l<=h){
-
-            int mid = l + (h-l)/2;
-
-            if(wt[mid]<=temp){
-                i2 = mid;
-                l = mid+1;
-            }
-
-            else    
-                h = mid-1; 
-        }
-
-        if(i2!=-1){
-            wt[i2]=x+1;
-        }
-
-        ans++;
+        cin >> x >> y;
+        price.push_back(x);
+        p.push_back({y,x});
     }
 
-    pans(ans);
+    sort(all(price),greater<int>());
+    sort(all(p),comp);
+
+    // for(auto it : p){
+    //     cout << it.first << " " << it.second << endl;
+    // }
+
+    f(i,0,n){
+        if(price[i]!=p[i].second){
+            cout << "Happy Alex" << endl;
+            return;
+        }
+    }
+
+    cout << "Poor Alex" << endl;
 }
 
 int main() {

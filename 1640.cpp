@@ -37,42 +37,22 @@ using namespace std;
 void solve() {
     in(n);
     in(x);
-    inarr(n,wt);
-    sort(all(wt));
-    int ans = 0;
-    
+    inarr(n,arr);
+    map<ll,ll> m;
+
     f(i,0,n){
-
-        int l = i+1;
-        int h = n-1;
-
-        if(wt[i]>x)
-            continue;
-
-        int temp = x - wt[i];
-        int i2 = -1;
-
-        while(l<=h){
-
-            int mid = l + (h-l)/2;
-
-            if(wt[mid]<=temp){
-                i2 = mid;
-                l = mid+1;
-            }
-
-            else    
-                h = mid-1; 
-        }
-
-        if(i2!=-1){
-            wt[i2]=x+1;
-        }
-
-        ans++;
+        m[arr[i]]=i;
     }
 
-    pans(ans);
+    f(i,0,n){
+
+        if(m.find(x-arr[i])!=m.end() && m[x-arr[i]]!=i){
+            cout << i+1 << " " << m[x-arr[i]]+1 << endl;
+            return;
+        }
+    }
+
+    cout << "IMPOSSIBLE" << endl;
 }
 
 int main() {

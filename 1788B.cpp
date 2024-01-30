@@ -35,44 +35,58 @@ using namespace std;
 #define dbg4(x,y,z,w) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << "\t" << #w << "= " << w << endl;
 
 void solve() {
-    in(n);
-    in(x);
-    inarr(n,wt);
-    sort(all(wt));
-    int ans = 0;
-    
-    f(i,0,n){
+   ll n;
+ cin>>n;
+ 
+ vector<int> digits;
+ ll copy=n;
+ 
+ while(copy)
+ {
+  digits.push_back(copy%10);
+  copy=copy/10;
+ }
+ 
+ vector<int> a,b;
+ 
+ bool flag=true;
+ for(int i=0;i<digits.size();i++)
+ {
+   if(digits[i]%2==0)
+   {
+    a.push_back(digits[i]/2);
+    b.push_back(digits[i]/2);
+   }
+   else
+   {
+      if(flag)
+      {a.push_back(digits[i]/2 +1);
+      b.push_back(digits[i]/2);
+      flag=false;
+      }
+      else
+      {
+      a.push_back(digits[i]/2 );
+      b.push_back(digits[i]/2+1);
+      flag=true;
+      }
+   }
+}
 
-        int l = i+1;
-        int h = n-1;
+ll a1=0,b1=0;
+ 
+ for(int i=a.size()-1;i>=0;i--)
+  {
+    a1=a1*10+a[i];
+  }
+ for(int i=b.size()-1;i>=0;i--)
+  {
+    b1=b1*10+b[i];
+  }
+ 
+  cout<<a1<<" "<<b1<<endl;
 
-        if(wt[i]>x)
-            continue;
 
-        int temp = x - wt[i];
-        int i2 = -1;
-
-        while(l<=h){
-
-            int mid = l + (h-l)/2;
-
-            if(wt[mid]<=temp){
-                i2 = mid;
-                l = mid+1;
-            }
-
-            else    
-                h = mid-1; 
-        }
-
-        if(i2!=-1){
-            wt[i2]=x+1;
-        }
-
-        ans++;
-    }
-
-    pans(ans);
 }
 
 int main() {
@@ -80,7 +94,7 @@ int main() {
     fast;
     ll t = 1;
     ll i = 0;
-    // cin >> t;
+    cin >> t;
     while (t--) {
          //cout << "Test Case : " << i + 1 << endl;
         solve();

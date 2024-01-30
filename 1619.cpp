@@ -36,40 +36,23 @@ using namespace std;
 
 void solve() {
     in(n);
-    in(x);
-    inarr(n,wt);
-    sort(all(wt));
-    int ans = 0;
-    
+    vector<pair<ll,ll>> time;
+
     f(i,0,n){
+        ll a,b;
+        cin >> a >> b;
+        time.push_back({a,1});
+        time.push_back({b,-1});
+    }
 
-        int l = i+1;
-        int h = n-1;
+    sort(all(time));
 
-        if(wt[i]>x)
-            continue;
+    ll ans = 0;
+    ll count = 0;
 
-        int temp = x - wt[i];
-        int i2 = -1;
-
-        while(l<=h){
-
-            int mid = l + (h-l)/2;
-
-            if(wt[mid]<=temp){
-                i2 = mid;
-                l = mid+1;
-            }
-
-            else    
-                h = mid-1; 
-        }
-
-        if(i2!=-1){
-            wt[i2]=x+1;
-        }
-
-        ans++;
+    for(auto it : time){
+        count += it.second;
+        ans = max(ans,count);
     }
 
     pans(ans);

@@ -36,43 +36,32 @@ using namespace std;
 
 void solve() {
     in(n);
-    in(x);
-    inarr(n,wt);
-    sort(all(wt));
-    int ans = 0;
-    
+    in(k);
+    // inarr(n,u);
+    // map<ll,vll> m;
+     map<int, pair<int, int>>m;
+
     f(i,0,n){
-
-        int l = i+1;
-        int h = n-1;
-
-        if(wt[i]>x)
-            continue;
-
-        int temp = x - wt[i];
-        int i2 = -1;
-
-        while(l<=h){
-
-            int mid = l + (h-l)/2;
-
-            if(wt[mid]<=temp){
-                i2 = mid;
-                l = mid+1;
-            }
-
-            else    
-                h = mid-1; 
+        int u;
+        cin >> u;
+        if(!m.count(u)) {
+            m[u].first = i;
+            m[u].second = i;
         }
-
-        if(i2!=-1){
-            wt[i2]=x+1;
-        }
-
-        ans++;
+        else m[u].second = i;
     }
 
-    pans(ans);
+    f(i,0,k){
+
+        int a, b;
+        cin >> a >> b;
+        if(!m.count(a) or !m.count(b) or m[a].first > m[b].second) {
+            cout << "NO\n"; //equals = 0 = wrong
+        }
+        else cout << "YES\n";
+    }
+
+
 }
 
 int main() {
@@ -80,7 +69,7 @@ int main() {
     fast;
     ll t = 1;
     ll i = 0;
-    // cin >> t;
+    cin >> t;
     while (t--) {
          //cout << "Test Case : " << i + 1 << endl;
         solve();

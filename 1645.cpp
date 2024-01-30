@@ -1,5 +1,9 @@
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
+using namespace __gnu_pbds;
+#define pbds tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 #define in(n)           long long int n;   cin >> n
 #define inarr(n, arr)   vll arr(n); f(i, 0, n)    cin >> arr[i]
 #define instr(s)        string s;   cin >> s
@@ -36,43 +40,33 @@ using namespace std;
 
 void solve() {
     in(n);
-    in(x);
-    inarr(n,wt);
-    sort(all(wt));
-    int ans = 0;
-    
+    inarr(n,arr);
+    stack<ll> s;
+    vll ans;
+    // print("hello");
+    // cout << "hell0" << endl;
+
     f(i,0,n){
 
-        int l = i+1;
-        int h = n-1;
+        while(s.size() && arr[s.top()]>=arr[i])
+            s.pop();
 
-        if(wt[i]>x)
-            continue;
-
-        int temp = x - wt[i];
-        int i2 = -1;
-
-        while(l<=h){
-
-            int mid = l + (h-l)/2;
-
-            if(wt[mid]<=temp){
-                i2 = mid;
-                l = mid+1;
-            }
-
-            else    
-                h = mid-1; 
+        if(s.size()){
+            ans.push_back(s.top()+1);
         }
 
-        if(i2!=-1){
-            wt[i2]=x+1;
+        else{
+            ans.push_back(0);
         }
 
-        ans++;
+        s.push(i);
     }
 
-    pans(ans);
+    f(i,0,n){
+        cout << ans[i] << " ";
+    }
+
+
 }
 
 int main() {

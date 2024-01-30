@@ -36,43 +36,39 @@ using namespace std;
 
 void solve() {
     in(n);
-    in(x);
-    inarr(n,wt);
-    sort(all(wt));
-    int ans = 0;
-    
-    f(i,0,n){
+    inarr(n,price);
+    in(days);
+    inarr(days,budget);
+    sort(all(price));
 
-        int l = i+1;
-        int h = n-1;
+    f(i,0,days){
 
-        if(wt[i]>x)
-            continue;
-
-        int temp = x - wt[i];
-        int i2 = -1;
+        ll l = 0;
+        ll h = n-1;
+        ll temp = -1;
 
         while(l<=h){
 
-            int mid = l + (h-l)/2;
+            ll mid = l + (h-l)/2;
 
-            if(wt[mid]<=temp){
-                i2 = mid;
-                l = mid+1;
+            if(price[mid]<=budget[i]){
+                temp = mid;
+                l = mid +1;
             }
 
             else    
-                h = mid-1; 
+                h = mid-1;
         }
 
-        if(i2!=-1){
-            wt[i2]=x+1;
+        if(temp==-1){
+            cout << 0 << endl;
         }
 
-        ans++;
+        else{
+            cout << temp + 1 << endl;
+        }
+        
     }
-
-    pans(ans);
 }
 
 int main() {

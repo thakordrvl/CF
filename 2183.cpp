@@ -36,43 +36,21 @@ using namespace std;
 
 void solve() {
     in(n);
-    in(x);
-    inarr(n,wt);
-    sort(all(wt));
-    int ans = 0;
-    
+    inarr(n,arr);
+    sort(all(arr));
+    ll sum = 0;
+
     f(i,0,n){
 
-        int l = i+1;
-        int h = n-1;
-
-        if(wt[i]>x)
-            continue;
-
-        int temp = x - wt[i];
-        int i2 = -1;
-
-        while(l<=h){
-
-            int mid = l + (h-l)/2;
-
-            if(wt[mid]<=temp){
-                i2 = mid;
-                l = mid+1;
-            }
-
-            else    
-                h = mid-1; 
+        if(sum + 1 < arr[i]){
+            cout << sum + 1 << endl;
+            return;
         }
-
-        if(i2!=-1){
-            wt[i2]=x+1;
-        }
-
-        ans++;
+        
+        sum += arr[i];
     }
 
-    pans(ans);
+    cout << sum + 1 << endl;
 }
 
 int main() {

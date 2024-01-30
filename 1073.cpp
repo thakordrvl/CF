@@ -36,43 +36,31 @@ using namespace std;
 
 void solve() {
     in(n);
-    in(x);
-    inarr(n,wt);
-    sort(all(wt));
-    int ans = 0;
-    
+    inarr(n,arr);
+    multiset<ll> curr;
+
     f(i,0,n){
 
-        int l = i+1;
-        int h = n-1;
+        if(curr.size()==0)
+            curr.insert(arr[i]);
 
-        if(wt[i]>x)
-            continue;
+        else{
 
-        int temp = x - wt[i];
-        int i2 = -1;
+            auto it = curr.upper_bound(arr[i]);
 
-        while(l<=h){
-
-            int mid = l + (h-l)/2;
-
-            if(wt[mid]<=temp){
-                i2 = mid;
-                l = mid+1;
+            if(it==curr.end()){
+                curr.insert(arr[i]);
             }
 
-            else    
-                h = mid-1; 
+            else{
+                curr.erase(it);
+                
+                curr.insert(arr[i]);
+            }
         }
-
-        if(i2!=-1){
-            wt[i2]=x+1;
-        }
-
-        ans++;
     }
 
-    pans(ans);
+    pans(curr.size());
 }
 
 int main() {

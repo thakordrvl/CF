@@ -1,5 +1,9 @@
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
+using namespace __gnu_pbds;
+#define pbds tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 #define in(n)           long long int n;   cin >> n
 #define inarr(n, arr)   vll arr(n); f(i, 0, n)    cin >> arr[i]
 #define instr(s)        string s;   cin >> s
@@ -36,42 +40,26 @@ using namespace std;
 
 void solve() {
     in(n);
-    in(x);
-    inarr(n,wt);
-    sort(all(wt));
-    int ans = 0;
-    
+    inarr(n,arr);
+
+    ll ans = 0;
+    map<ll,ll> m;
+    ll sum = 0;
+
     f(i,0,n){
 
-        int l = i+1;
-        int h = n-1;
+        sum += arr[i];
 
-        if(wt[i]>x)
-            continue;
+        if((sum%n)==0)
+            ans++;
 
-        int temp = x - wt[i];
-        int i2 = -1;
+        ll mod = ((sum%n) + n)%n;
 
-        while(l<=h){
+        if(m[mod])
+            ans+=m[mod];
 
-            int mid = l + (h-l)/2;
-
-            if(wt[mid]<=temp){
-                i2 = mid;
-                l = mid+1;
-            }
-
-            else    
-                h = mid-1; 
-        }
-
-        if(i2!=-1){
-            wt[i2]=x+1;
-        }
-
-        ans++;
+        m[mod]++;
     }
-
     pans(ans);
 }
 

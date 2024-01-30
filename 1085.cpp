@@ -1,5 +1,9 @@
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
+using namespace __gnu_pbds;
+#define pbds tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 #define in(n)           long long int n;   cin >> n
 #define inarr(n, arr)   vll arr(n); f(i, 0, n)    cin >> arr[i]
 #define instr(s)        string s;   cin >> s
@@ -34,57 +38,49 @@ using namespace std;
 #define dbg3(x,y,z) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << endl;
 #define dbg4(x,y,z,w) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << "\t" << #w << "= " << w << endl;
 
-void solve() {
-    in(n);
-    in(x);
-    inarr(n,wt);
-    sort(all(wt));
-    int ans = 0;
-    
-    f(i,0,n){
+// using ll = long long;
 
-        int l = i+1;
-        int h = n-1;
+// MAX_N * MAX_X
+ll MAX_SUM = 2e5 * 1e9;
 
-        if(wt[i]>x)
-            continue;
+/**
+ * true if the given `arr` can be divided into `k` subarrays where the sum of
+ * each subarray is at most `max_sum`
+ */
+bool is_possible(const vector<ll> &arr, const int k, ll max_sum) {
+	// # of subarrays needed if sum of each subarray is at most max_sum
+	int subarr_count = 0;
+	// sum of the current subarray
+	ll cur_sum = 0;
 
-        int temp = x - wt[i];
-        int i2 = -1;
+	for (const int &x : arr) {
+		if (x > max_sum) { return false; }
 
-        while(l<=h){
+		if (cur_sum + x > max_sum) {
+			subarr_count++;
+			cur_sum = 0;
+		}
+		cur_sum += x;
+	}
+	if (cur_sum > 0) { subarr_count++; }
 
-            int mid = l + (h-l)/2;
-
-            if(wt[mid]<=temp){
-                i2 = mid;
-                l = mid+1;
-            }
-
-            else    
-                h = mid-1; 
-        }
-
-        if(i2!=-1){
-            wt[i2]=x+1;
-        }
-
-        ans++;
-    }
-
-    pans(ans);
+	return subarr_count <= k;
 }
 
 int main() {
-    // sieve();
-    fast;
-    ll t = 1;
-    ll i = 0;
-    // cin >> t;
-    while (t--) {
-         //cout << "Test Case : " << i + 1 << endl;
-        solve();
-        i++;
-    }
-    return 0;
+	int n, k;
+	cin >> n >> k;
+	vector<ll> arr(n);
+	for (ll &i : arr) { cin >> i; }
+
+	ll l = 1, r = MAX_SUM;
+	while (l < r) {
+		ll mid = (l + r) / 2;
+		if (is_possible(arr, k, mid)) {
+			r = mid;
+		} else {
+			l = mid + 1;
+		}
+	}
+	cout << l << '\n';
 }

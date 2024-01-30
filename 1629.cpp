@@ -34,45 +34,39 @@ using namespace std;
 #define dbg3(x,y,z) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << endl;
 #define dbg4(x,y,z,w) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << "\t" << #w << "= " << w << endl;
 
+bool comp(const pair<ll,ll> &p1, const pair<ll,ll> &p2){
+
+    if(p1.second==p2.second)
+        return p1.first < p2.first;
+
+    return p1.second < p2.second;   
+}
+
+
 void solve() {
     in(n);
-    in(x);
-    inarr(n,wt);
-    sort(all(wt));
-    int ans = 0;
-    
+    vector<pair<ll,ll>> time;
+
     f(i,0,n){
-
-        int l = i+1;
-        int h = n-1;
-
-        if(wt[i]>x)
-            continue;
-
-        int temp = x - wt[i];
-        int i2 = -1;
-
-        while(l<=h){
-
-            int mid = l + (h-l)/2;
-
-            if(wt[mid]<=temp){
-                i2 = mid;
-                l = mid+1;
-            }
-
-            else    
-                h = mid-1; 
-        }
-
-        if(i2!=-1){
-            wt[i2]=x+1;
-        }
-
-        ans++;
+        ll a,b;
+        cin >> a >> b;
+        time.push_back({a,b});
     }
 
-    pans(ans);
+    sort(all(time),comp);
+
+    ll count = 0;
+    ll maxtime = -1;
+
+    f(i,0,n){
+
+        if(maxtime==-1 || time[i].first >= maxtime){
+            count++;
+            maxtime = max(time[i].second,maxtime);
+        }
+    }
+
+    pans(count);
 }
 
 int main() {

@@ -1,5 +1,9 @@
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
+using namespace __gnu_pbds;
+#define pbds tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 #define in(n)           long long int n;   cin >> n
 #define inarr(n, arr)   vll arr(n); f(i, 0, n)    cin >> arr[i]
 #define instr(s)        string s;   cin >> s
@@ -35,44 +39,29 @@ using namespace std;
 #define dbg4(x,y,z,w) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << "\t" << #w << "= " << w << endl;
 
 void solve() {
-    in(n);
-    in(x);
-    inarr(n,wt);
-    sort(all(wt));
-    int ans = 0;
-    
-    f(i,0,n){
+    int street_len;
+	int light_num;
+	cin >> street_len >> light_num;
 
-        int l = i+1;
-        int h = n-1;
+	set<int> lights{0, street_len};
+	multiset<int> dist{street_len};
+	for (int l = 0; l < light_num; l++) {
+		int pos;
+		cin >> pos;
 
-        if(wt[i]>x)
-            continue;
+		auto it1 = lights.upper_bound(pos);
+		auto it2 = it1;
+		--it2;
 
-        int temp = x - wt[i];
-        int i2 = -1;
+		dist.erase(dist.find(*it1 - *it2));
+		dist.insert(pos - *it2);
+		dist.insert(*it1 - pos);
+		lights.insert(pos);
 
-        while(l<=h){
-
-            int mid = l + (h-l)/2;
-
-            if(wt[mid]<=temp){
-                i2 = mid;
-                l = mid+1;
-            }
-
-            else    
-                h = mid-1; 
-        }
-
-        if(i2!=-1){
-            wt[i2]=x+1;
-        }
-
-        ans++;
-    }
-
-    pans(ans);
+		auto ans = dist.end();
+		--ans;
+		cout << *ans << " ";
+	}  
 }
 
 int main() {

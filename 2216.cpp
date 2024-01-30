@@ -36,43 +36,24 @@ using namespace std;
 
 void solve() {
     in(n);
-    in(x);
-    inarr(n,wt);
-    sort(all(wt));
-    int ans = 0;
-    
+    vpll index;
+    for(int i=0;i<n;i++){
+        ll x;
+        cin >> x;
+        index.push_back({x,i});
+    }
+
+    sort(all(index));
+
+    ll ans = 1;
+
     f(i,0,n){
-
-        int l = i+1;
-        int h = n-1;
-
-        if(wt[i]>x)
-            continue;
-
-        int temp = x - wt[i];
-        int i2 = -1;
-
-        while(l<=h){
-
-            int mid = l + (h-l)/2;
-
-            if(wt[mid]<=temp){
-                i2 = mid;
-                l = mid+1;
-            }
-
-            else    
-                h = mid-1; 
-        }
-
-        if(i2!=-1){
-            wt[i2]=x+1;
-        }
-
-        ans++;
+        if(i!=0 && index[i].second <index[i-1].second)
+            ans++;
     }
 
     pans(ans);
+
 }
 
 int main() {

@@ -36,45 +36,30 @@ using namespace std;
 
 void solve() {
     in(n);
-    in(x);
-    inarr(n,wt);
-    sort(all(wt));
-    int ans = 0;
-    
-    f(i,0,n){
+    in(m);
+    inarr(n,price);
+    inarr(m,cust);
+    // sort(all(price));
+    set<pair<ll,ll>> s;
 
-        int l = i+1;
-        int h = n-1;
+    for(ll i=0;i<n;i++)
+        s.insert({price[i],i});
+ 
+    f(i,0,m){
 
-        if(wt[i]>x)
-            continue;
+        auto it = s.lower_bound({cust[i]+1,0});
 
-        int temp = x - wt[i];
-        int i2 = -1;
+        if(it==s.begin())
+            cout << -1 << endl;
 
-        while(l<=h){
-
-            int mid = l + (h-l)/2;
-
-            if(wt[mid]<=temp){
-                i2 = mid;
-                l = mid+1;
-            }
-
-            else    
-                h = mid-1; 
-        }
-
-        if(i2!=-1){
-            wt[i2]=x+1;
-        }
-
-        ans++;
+        else{
+            it--;
+            cout << (*it).first << endl;
+            s.erase(it);
+        }   
     }
-
-    pans(ans);
 }
-
+ 
 int main() {
     // sieve();
     fast;

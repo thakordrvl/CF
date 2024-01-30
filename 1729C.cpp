@@ -35,44 +35,50 @@ using namespace std;
 #define dbg4(x,y,z,w) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << "\t" << #w << "= " << w << endl;
 
 void solve() {
-    in(n);
-    in(x);
-    inarr(n,wt);
-    sort(all(wt));
-    int ans = 0;
-    
+
+    instr(s);
+    ll n = s.size();
+    map<ll,vll> m;
     f(i,0,n){
-
-        int l = i+1;
-        int h = n-1;
-
-        if(wt[i]>x)
-            continue;
-
-        int temp = x - wt[i];
-        int i2 = -1;
-
-        while(l<=h){
-
-            int mid = l + (h-l)/2;
-
-            if(wt[mid]<=temp){
-                i2 = mid;
-                l = mid+1;
-            }
-
-            else    
-                h = mid-1; 
-        }
-
-        if(i2!=-1){
-            wt[i2]=x+1;
-        }
-
-        ans++;
+        m[s[i]-'a'].push_back(i);
     }
 
-    pans(ans);
+    ll totcost = abs(s[n-1]-s[0]);
+    vll pathtaken;
+    ll dir = s[0]<=s[n-1]?1:-1;
+    ll start = s[0]-'a';
+    ll end = s[n-1]-'a';
+
+    // dbg3(start,end,dir);
+
+
+    if(start<=end){
+        for(ll i=start;i<=end;i+=1){
+
+            if(m[i].size()){
+                for(auto it : m[i])
+                    pathtaken.push_back(it);
+            }
+        }
+    }
+
+    else{
+        
+        for(ll i=start;i>=end;i--){
+            if(m[i].size()){
+                for(auto it : m[i])
+                    pathtaken.push_back(it);
+            }
+        }
+    }
+
+    cout << totcost << " " << pathtaken.size() << endl;
+
+    for(auto it : pathtaken){
+        cout << it + 1 << " ";
+    }
+
+    cout << endl;
 }
 
 int main() {
@@ -80,7 +86,7 @@ int main() {
     fast;
     ll t = 1;
     ll i = 0;
-    // cin >> t;
+    cin >> t;
     while (t--) {
          //cout << "Test Case : " << i + 1 << endl;
         solve();

@@ -1,5 +1,8 @@
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp
+#include <ext/pb_ds/tree_policy.hpp
 using namespace std;
+using namespace _gnu_pbds;
 #define in(n)           long long int n;   cin >> n
 #define inarr(n, arr)   vll arr(n); f(i, 0, n)    cin >> arr[i]
 #define instr(s)        string s;   cin >> s
@@ -35,44 +38,6 @@ using namespace std;
 #define dbg4(x,y,z,w) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << "\t" << #w << "= " << w << endl;
 
 void solve() {
-    in(n);
-    in(x);
-    inarr(n,wt);
-    sort(all(wt));
-    int ans = 0;
-    
-    f(i,0,n){
-
-        int l = i+1;
-        int h = n-1;
-
-        if(wt[i]>x)
-            continue;
-
-        int temp = x - wt[i];
-        int i2 = -1;
-
-        while(l<=h){
-
-            int mid = l + (h-l)/2;
-
-            if(wt[mid]<=temp){
-                i2 = mid;
-                l = mid+1;
-            }
-
-            else    
-                h = mid-1; 
-        }
-
-        if(i2!=-1){
-            wt[i2]=x+1;
-        }
-
-        ans++;
-    }
-
-    pans(ans);
 }
 
 int main() {
@@ -80,7 +45,7 @@ int main() {
     fast;
     ll t = 1;
     ll i = 0;
-    // cin >> t;
+    cin >> t;
     while (t--) {
          //cout << "Test Case : " << i + 1 << endl;
         solve();
