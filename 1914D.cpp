@@ -39,15 +39,43 @@ using namespace __gnu_pbds;
 #define dbg4(x,y,z,w) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << "\t" << #w << "= " << w << endl;
 
 void solve() {
-    in(n);
-    inarr(n,arr);
-    sort(all(arr));
-    int i=0, j=n-1;
-    int sum1=0, sum2=0;
-    while(i<j){
-        sum1=arr[i];
-        sum2+=arr[j-i];
+    in(n);  
+
+    vpll arr1(n),arr2(n),arr3(n);
+
+    for(ll i=0;i<n;i++){
+        cin >> arr1[i].first;
+        arr1[i].second = i;
     }
+
+     for(ll i=0;i<n;i++){
+        cin >> arr2[i].first;
+        arr2[i].second = i;
+    }
+     for(ll i=0;i<n;i++){
+        cin >> arr3[i].first;
+        arr3[i].second = i;
+    }
+
+    sort(all(arr1));
+    reverse(all(arr1));
+    sort(all(arr2));
+    reverse(all(arr2));
+    sort(all(arr3));
+    reverse(all(arr3));
+
+    ll ans = 0;
+
+    f(i,0,3){
+        f(j,0,3){
+            f(k,0,3){
+                if(arr1[i].second!=arr2[j].second && arr2[j].second!=arr3[k].second && arr3[k].second!=arr1[i].second)
+                    ans = max(ans,arr1[i].first + arr2[j].first + arr3[k].first);    
+            }
+        }
+    }
+
+    pans(ans)
 }
 
 int main() {
@@ -55,7 +83,7 @@ int main() {
     fast;
     ll t = 1;
     ll i = 0;
-    // cin >> t;
+    cin >> t;
     while (t--) {
          //cout << "Test Case : " << i + 1 << endl;
         solve();

@@ -41,13 +41,31 @@ using namespace __gnu_pbds;
 void solve() {
     in(n);
     inarr(n,arr);
-    sort(all(arr));
-    int i=0, j=n-1;
-    int sum1=0, sum2=0;
-    while(i<j){
-        sum1=arr[i];
-        sum2+=arr[j-i];
+    ll sum = 0;
+    ll oddcount = 0;
+
+    f(i,0,n){
+
+        oddcount += (arr[i]&1);
+        sum += arr[i];
+
+        if(i==0){
+            cout << sum << " ";
+            continue;
+        }
+
+        ll s = oddcount/3;
+
+        if((oddcount%3)==1){
+            s++;
+        }
+
+
+        cout << sum - s << " ";
+    
     }
+    
+    cout << endl;
 }
 
 int main() {
@@ -55,7 +73,7 @@ int main() {
     fast;
     ll t = 1;
     ll i = 0;
-    // cin >> t;
+    cin >> t;
     while (t--) {
          //cout << "Test Case : " << i + 1 << endl;
         solve();

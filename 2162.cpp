@@ -39,15 +39,22 @@ using namespace __gnu_pbds;
 #define dbg4(x,y,z,w) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << "\t" << #w << "= " << w << endl;
 
 void solve() {
-    in(n);
-    inarr(n,arr);
-    sort(all(arr));
-    int i=0, j=n-1;
-    int sum1=0, sum2=0;
-    while(i<j){
-        sum1=arr[i];
-        sum2+=arr[j-i];
-    }
+    int x,n;
+        cin >> x >> n;
+        int ans = 1;
+        for(int i=1;i<sqrt(x)+1;i++)
+        {
+            if(x%i==0)
+            {
+                if(n<=x/i)
+                    ans=max(ans,i);
+                if(n<=i)
+                    ans=max(ans,x/i);
+            }
+        }
+        cout << ans << '\n';
+
+
 }
 
 int main() {
@@ -55,7 +62,7 @@ int main() {
     fast;
     ll t = 1;
     ll i = 0;
-    // cin >> t;
+    cin >> t;
     while (t--) {
          //cout << "Test Case : " << i + 1 << endl;
         solve();

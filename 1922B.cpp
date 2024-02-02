@@ -39,15 +39,28 @@ using namespace __gnu_pbds;
 #define dbg4(x,y,z,w) cout << #x << "= " << x << "\t" << #y << "= " << y << "\t" << #z << "= " << z << "\t" << #w << "= " << w << endl;
 
 void solve() {
-    in(n);
-    inarr(n,arr);
-    sort(all(arr));
-    int i=0, j=n-1;
-    int sum1=0, sum2=0;
-    while(i<j){
-        sum1=arr[i];
-        sum2+=arr[j-i];
-    }
+          int n;
+        cin >> n;
+        map<int, int> numOfLens;
+        for (int i = 0; i < n; ++i){
+            int x;
+            cin >> x;
+            ++numOfLens[x];
+        }
+        
+        long long res = 0;
+        int sum = 0;
+        for (auto it : numOfLens) {
+            long long cnt = it.second;
+            if(cnt >= 3)
+                res += cnt * (cnt - 1) * (cnt - 2) / 6;
+            if(cnt >= 2)
+                res += cnt * (cnt - 1) / 2 * sum;
+            sum += cnt;
+        }
+        
+        cout << res << endl;
+
 }
 
 int main() {
@@ -55,7 +68,7 @@ int main() {
     fast;
     ll t = 1;
     ll i = 0;
-    // cin >> t;
+    cin >> t;
     while (t--) {
          //cout << "Test Case : " << i + 1 << endl;
         solve();
