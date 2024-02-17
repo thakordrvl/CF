@@ -55,55 +55,80 @@ bool isPowerOfTwo(int n) { if (n == 0) return false; return (ceil(log2(n)) == fl
 int isKthBitSet(int n, int k) { if ((n >> k) & 1ll) return 1; else return 0; }
 int unsetKthBit(int n, int k) { return (n & (~(1ll << (k)))); }
 int setKthBit(int n, int k) { return ((1ll << k) | n); }
-int fact(int number) { int fact = 1; for (int i = 1; i <= number; i++) { fact = fact * i; } return fact; }
 int bs_sqrt(int x) { int left = 0, right = 2000000123; while (right > left) { int mid = (left + right) / 2; if (mid * mid > x) right = mid; else left = mid + 1; } return left - 1; }
 int modpower(int n, int a, int p) { int res = 1; while (a) { if (a % 2) res = ((res * n) % p), a--; else n = ((n * n) % p), a /= 2; } return res; }
 int getSum(int n) { int sum; for (sum = 0; n > 0; sum += n % 10, n /= 10) ; return sum; }
 bool isPrime(int n) { if (n <= 1) for (int i = 2; i * i <= n; i++) { if (n % i == 0) return false; } return true; }
 void primeFactors(int n, set<int> &st) { while (n % 2 == 0) { st.insert(2); n = n / 2; } for (int i = 3; i <= bs_sqrt(n); i = i + 2) { while (n % i == 0) { st.insert(i); n = n / i; } } if (n > 2) st.insert(n); }
-int ncr(int N, int r) { double res = 1; for (int i = 1; i <= r; i++) { res = res * (N - r + i) / i; } return (int)res; }
 int modInverse(int n, int p) { return modpower(n, p - 2, p); }
 int mul(int x, int y, int p) { return x * 1ll * y % p; }
 int divide(int x, int y, int p) { return mul(x, modInverse(y, p), p); }
-int nCrModPFermat(int n, int r, int p) { if (n < r) return 0; if (r == 0) return 1; if (n - r < r) return nCrModPFermat(n, n - r, p); int res = 1; for (int i = r; i >= 1; i--) res = divide(mul(res, n - i + 1, p), i, p); return res; }
 bool isPerfectSquare(long double x) { if (x >= 0) { long long sr = bs_sqrt(x); return (sr * sr == x); } return false; }
+bool sortbysec(const pair<int,int> &a,const pair<int,int> &b) { return (a.second < b.second); }
 
 
-map<ll,ll> m;
+
+
+
+// pair<ll,ll> solve2(ll times, vll &arr,ll lastweight,ll available, ll x, vpll &dp){
+
+//     if(available==0){
+//         return {times,lastweight};
+//     }
+
+//     if(dp[available].first!=-1){
+//         return dp[available];
+//     }
+
+//     pll ans = {INT_MAX,INT_MAX};
+
+//     f(i,0,22){
+//         if(available & 1ll<<i){
+
+//             auto tempx = (1<<i) ^ available;
+//             pll temp;
+
+//             if(lastweight + arr[i] > x)
+//                 temp = solve2(times+1,arr,arr[i],tempx,x,dp);
+            
+//             else
+//                 temp = solve2(times,arr,lastweight + arr[i], tempx,x, dp);
+
+//             if((temp.first < ans.first) || (temp.first == ans.first and temp.second < ans.second)){
+//                 ans = temp;
+//             }
+//         }
+//     }
+
+//     return dp[available] = ans;
+// }
 
 void solve() {
+   in(n);
+   in(x);
+   inarr(n,arr);
+   vpll dp(1<<n,{1e9,1e9});
+   dp[0] = {1,0};
 
-    in(t);
-    in(v);
+    for(int mask = 1;mask<(1<<n);mask++){
+        for(int bit = 0;bit < n; bit++){
+            if((1<<bit)&mask){
+                
+                int space_taken = dp[mask^(1<<bit)].second;
+                if(space_taken + arr[bit] <= x){
+                    dp[mask] = min(dp[mask],{dp[mask^(1<<bit)].first, space_taken + arr[bit]});
+                }
 
-    if(t==1){
-        m[v]++;
-    }
+                else{
+                dp[mask] = min(dp[mask],{1  + dp[mask^(1<<bit)].first,arr[bit]});
+                }
+            }
 
-    else{
-
-        ll x = v;
-        ll start = log2(v);
-        // dbg1(start)
-        for(ll i=start;i>=0;i--){
-            ll val = (ll)pow(2,i);
-            ll div = x/val;
-            // dbg1(x)
-            // dbg1(val)
-            x -= val*((ll)min(m[i],div));
-            if(x==0)
-                break;
-        }
-
-        if(x==0){
-            // dbg1(x)
-            pyes
-        }
-
-        else{
-            pno
+            
         }
     }
+
+    cout << dp[(1<<n)-1].first << endl;
 }
 
 int main() {
@@ -111,7 +136,7 @@ int main() {
     fast;
     ll t = 1;
     ll i = 0;
-    cin >> t;
+    // cin >> t;
     while (t--) {
          //cout << "Test Case : " << i + 1 << endl;
         solve();
