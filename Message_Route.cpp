@@ -87,36 +87,42 @@ void solve() {
         adj[b].push_back(a);
     }
 
-    priority_queue<pair<ll,vector<ll>>,vector<pair<ll,vector<ll>>>,greater<pair<ll,vector<ll>>>> pq;
-    pq.push({1,{1}});
-
+    priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,greater<pair<ll,ll>>> pq;
+    vector<ll> par(n+1,1);
+    par[1] = 0;
+    pq.push({1,1});
     vector<ll> vis(n+1,0);
     vis[1] = 1;
 
     while(pq.size()){
 
         auto temp = pq.top();
-        auto tempvec = pq.top().second;
-        auto tempdis = pq.top().first;
         pq.pop();
 
-        if(tempvec.back()==n){
-            pans(tempdis)
-            print(tempvec,0,tempvec.size());
+        if(temp.second==n){
+            pans(temp.first)
+            ll ptr = n;
+            vll ans;
+            while(ptr!=0){
+                ans.push_back(ptr);
+                // dbg2(ptr,par[ptr])
+                ptr = par[ptr];
+            }
+            reverse(all(ans));
+            print(ans,0,ans.size());
             return;
         }
 
-        for(auto it : adj[tempvec.back()]){
+        for(auto it : adj[temp.second]){
             if(!vis[it]){
                 vis[it] = 1;
-                tempvec.push_back(it);
-                pq.push({tempdis +1,tempvec});
-                tempvec.pop_back();
+                par[it] = temp.second;
+                pq.push({temp.first +1,it});
             }
         }
     }
 
-    cout << "IMPOSSIBLE" << "\n"
+    cout << "IMPOSSIBLE" << "\n";
 }
 
 int main() {

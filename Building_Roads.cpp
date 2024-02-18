@@ -75,10 +75,20 @@ int divide(int x, int y, int p) { return mul(x, modInverse(y, p), p); }
 bool isPerfectSquare(long double x) { if (x >= 0) { long long sr = bs_sqrt(x); return (sr * sr == x); } return false; }
 bool sortbysec(const pair<int,int> &a,const pair<int,int> &b) { return (a.second < b.second); }
 
+
+void dfs(int i,vll &vis, vll adj[]){
+    vis[i] = 1;
+    for(auto it : adj[i]){
+        if(!vis[it])
+            dfs(it,vis,adj);
+    }
+}
+
 void solve() {
    in(n);
    in(m);
-   vector<ll> adj[n+1];
+   vll adj[n+1];
+    vll newroads;
 
     f(i,0,m){
         ll a,b;
@@ -87,36 +97,21 @@ void solve() {
         adj[b].push_back(a);
     }
 
-    priority_queue<pair<ll,vector<ll>>,vector<pair<ll,vector<ll>>>,greater<pair<ll,vector<ll>>>> pq;
-    pq.push({1,{1}});
+    // ll ans = 0;
+    vll vis(n+1,0);
+    
 
-    vector<ll> vis(n+1,0);
-    vis[1] = 1;
-
-    while(pq.size()){
-
-        auto temp = pq.top();
-        auto tempvec = pq.top().second;
-        auto tempdis = pq.top().first;
-        pq.pop();
-
-        if(tempvec.back()==n){
-            pans(tempdis)
-            print(tempvec,0,tempvec.size());
-            return;
-        }
-
-        for(auto it : adj[tempvec.back()]){
-            if(!vis[it]){
-                vis[it] = 1;
-                tempvec.push_back(it);
-                pq.push({tempdis +1,tempvec});
-                tempvec.pop_back();
-            }
+    f(i,1,n+1){
+        if(!vis[i]){
+            newroads.push_back(i);
+            dfs(i,vis,adj);
         }
     }
 
-    cout << "IMPOSSIBLE" << "\n"
+    pans(newroads.size() - 1)
+    for(int i=0;i<newroads.size()-1;i++){
+        cout << newroads[i] << " " << newroads[i+1] << endl;
+    }
 }
 
 int main() {
